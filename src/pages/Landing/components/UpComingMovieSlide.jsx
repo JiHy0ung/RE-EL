@@ -22,11 +22,11 @@ const UpComingMovieSlide = () => {
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
-      items: 8,
+      items: 5,
     },
     tablet: {
       breakpoint: { max: 1024, min: 464 },
-      items: 2,
+      items: 3,
     },
     mobile: {
       breakpoint: { max: 464, min: 0 },
@@ -35,8 +35,16 @@ const UpComingMovieSlide = () => {
   };
 
   return (
-    <Box p={5}>
-      <Typography variant="h3" sx={{ color: "white", pb: 4 }}>
+    <Box p={3}>
+      <Typography
+        sx={{
+          color: "white",
+          pb: 4,
+          fontSize: { lg: "3rem", md: "2rem", xs: "2rem" },
+          fontFamily: "Aggravo",
+          letterSpacing: "-1px",
+        }}
+      >
         UpComing Movies
       </Typography>
       <Box
