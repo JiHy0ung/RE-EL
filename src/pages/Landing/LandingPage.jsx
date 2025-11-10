@@ -1,11 +1,18 @@
 import React from "react";
 import Banner from "./components/Banner";
+import PopularMovieSlide from "./components/PopularMovieSlide";
+import UpComingMovieSlide from "./components/UpComingMovieSlide";
+import TopRatedMovieSlide from "./components/TopRatedMovieSlide";
+import { Box } from "@mui/material";
 
 const LandingPage = () => {
   return (
-    <div>
+    <Box sx={{ overflow: "hidden" }}>
       <Banner />
-    </div>
+      <PopularMovieSlide />
+      <UpComingMovieSlide />
+      <TopRatedMovieSlide />
+    </Box>
   );
 };
 
