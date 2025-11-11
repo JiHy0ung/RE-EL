@@ -81,7 +81,9 @@ const MovieCard = ({ movie }) => {
           </Typography>
         </Box>
 
-        <Box sx={{ display: "flex", gap: 0.5 }}>
+        <Box
+          sx={{ display: "flex", gap: 0.5, flexWrap: "wrap", maxWidth: "100%" }}
+        >
           {showGenre(movie.genre_ids).map((id) => (
             <Chip color="secondary" size="small" label={id} />
           ))}
