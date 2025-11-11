@@ -1,7 +1,21 @@
 import { Box, Chip, Typography } from "@mui/material";
 import React from "react";
+import { useMovieGenreQuery } from "../../hooks/useMovieGenre";
 
 const MovieCard = ({ movie }) => {
+  const { data: genreData } = useMovieGenreQuery();
+
+  const showGenre = (genreIdList) => {
+    if (!genreData) return [];
+
+    const genreNameList = genreIdList.map((id) => {
+      const genreObj = genreData.find((genre) => genre.id === id);
+      return genreObj.name;
+    });
+
+    return genreNameList;
+  };
+
   return (
     <Box
       sx={{
@@ -27,8 +41,8 @@ const MovieCard = ({ movie }) => {
           width: "100%",
           height: "100%",
           backgroundColor: "rgba(0, 0, 0, 0.5)",
-          py: { xs: 8, sm: 2 },
-          px: { xs: 3, lg: 4, xl: 6 },
+          py: { xs: 6, sm: 2 },
+          px: { xs: 3, lg: 4, xl: 4 },
           opacity: 0,
           transition: "opacity 0.3s ease",
           display: "flex",
@@ -54,7 +68,7 @@ const MovieCard = ({ movie }) => {
                 alignItems: "center",
                 backgroundColor: "red",
                 borderRadius: "35px",
-                px: 2,
+                px: 1,
                 py: 1,
                 letterSpacing: "-1.25px",
               }}
@@ -67,8 +81,8 @@ const MovieCard = ({ movie }) => {
           </Typography>
         </Box>
 
-        <Box sx={{ display: "flex", gap: 1 }}>
-          {movie.genre_ids.map((id) => (
+        <Box sx={{ display: "flex", gap: 0.5 }}>
+          {showGenre(movie.genre_ids).map((id) => (
             <Chip color="secondary" size="small" label={id} />
           ))}
         </Box>
