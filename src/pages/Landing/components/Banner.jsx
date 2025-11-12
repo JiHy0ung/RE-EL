@@ -47,7 +47,14 @@ const Banner = () => {
           zIndex: 1,
         }}
       >
-        <Typography variant="h2" sx={{ color: "white", fontFamily: "Heiro" }}>
+        <Typography
+          variant="h2"
+          sx={{
+            color: "white",
+            fontFamily: "Heiro",
+            fontSize: { xs: "3rem", sm: "3.75rem" },
+          }}
+        >
           {data[0]?.title}
         </Typography>
         <Typography variant="p" sx={{ width: "55%", color: "white" }}>

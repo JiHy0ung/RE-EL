@@ -49,7 +49,6 @@ body,
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
-  background: #fff;
   filter: blur(5px) contrast(10) hue-rotate(60deg);
   mix-blend-mode: darken;
 }
@@ -58,7 +57,7 @@ body,
   content: "";
   width: 40px;
   border-radius: 50%;
-  background: #ff00ff;
+  background: #d900ff !important;
   animation: l3 1s infinite alternate;
 }
 .loader:after {

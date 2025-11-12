@@ -19,8 +19,12 @@ const MovieCard = ({ movie }) => {
   return (
     <Box
       sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
         height: "330px",
-        m: 1,
+        width: "220px",
+        mx: 11,
         position: "relative",
         "&:hover .overlay": {
           opacity: 1,
@@ -29,8 +33,12 @@ const MovieCard = ({ movie }) => {
     >
       <Box
         component="img"
-        src={`https://media.themoviedb.org/t/p/w440_and_h660_face${movie?.poster_path}`}
-        sx={{ height: "330px", width: "100%", objectFit: "contain" }}
+        src={
+          movie?.poster_path
+            ? `https://media.themoviedb.org/t/p/w440_and_h660_face${movie?.poster_path}`
+            : "../../../no-poster-image.png"
+        }
+        sx={{ height: "330px", width: "100%", objectFit: "cover", p: 2 }}
       />
       <Box
         className="overlay"
@@ -41,8 +49,8 @@ const MovieCard = ({ movie }) => {
           width: "100%",
           height: "100%",
           backgroundColor: "rgba(0, 0, 0, 0.5)",
-          py: { xs: 6, sm: 2 },
-          px: { xs: 3, lg: 4, xl: 4 },
+          py: 2,
+          px: 2,
           opacity: 0,
           transition: "opacity 0.3s ease",
           display: "flex",

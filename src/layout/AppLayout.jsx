@@ -6,15 +6,22 @@ import { Outlet, useNavigate } from "react-router";
 const AppLayout = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const [keyword, setKeyword] = useState("");
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
 
   const handleNavigation = (path) => {
-    console.log("Navigating to:", path);
     navigate(path);
     setOpen(false);
+  };
+
+  const searchByKeyword = (e) => {
+    e.preventDefault();
+
+    navigate(`/movies?q=${keyword}`);
+    setKeyword("");
   };
 
   return (
@@ -40,7 +47,6 @@ const AppLayout = () => {
             cursor: "pointer",
           }}
           onClick={() => {
-            console.log("Logo clicked");
             navigate("/");
           }}
         >
@@ -66,7 +72,6 @@ const AppLayout = () => {
               },
             }}
             onClick={() => {
-              console.log("Home clicked");
               navigate("/");
             }}
           >
@@ -99,37 +104,51 @@ const AppLayout = () => {
               ml: 2,
             }}
           >
-            <Search color="#f1f1f1" size={"1.5rem"} />
-            <TextField
-              onClick={() => console.log("Search clicked")}
+            <Box
+              component="form"
+              onSubmit={searchByKeyword}
               sx={{
-                "& .MuiInputBase-root": {
-                  height: "2rem",
-                  width: "8rem",
-                  borderRadius: "3rem",
-                  backgroundColor: "#2a2a2a",
-                  color: "#f1f1f1",
-                },
-                "& .MuiInputBase-input": {
-                  padding: "0 1rem",
-                  color: "#f1f1f1",
-                  "&::placeholder": {
-                    color: "#9a9a9a",
-                    opacity: 1,
-                  },
-                },
-                "& .MuiOutlinedInput-notchedOutline": {
-                  border: "1px solid #4a4a4a",
-                },
-                "& .MuiInputBase-root:hover .MuiOutlinedInput-notchedOutline": {
-                  border: "1px solid #9452ffff",
-                },
-                "& .MuiInputBase-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-                  {
-                    border: "2px solid #9452ffff",
-                  },
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: 1,
+                ml: 2,
               }}
-            />
+            >
+              <Search color="#f1f1f1" size={"1.5rem"} />
+              <TextField
+                value={keyword}
+                onChange={(e) => setKeyword(e.target.value)}
+                sx={{
+                  "& .MuiInputBase-root": {
+                    height: "2rem",
+                    width: "8rem",
+                    borderRadius: "3rem",
+                    backgroundColor: "#2a2a2a",
+                    color: "#f1f1f1",
+                  },
+                  "& .MuiInputBase-input": {
+                    padding: "0 1rem",
+                    color: "#f1f1f1",
+                    "&::placeholder": {
+                      color: "#9a9a9a",
+                      opacity: 1,
+                    },
+                  },
+                  "& .MuiOutlinedInput-notchedOutline": {
+                    border: "1px solid #4a4a4a",
+                  },
+                  "& .MuiInputBase-root:hover .MuiOutlinedInput-notchedOutline":
+                    {
+                      border: "1px solid #9452ffff",
+                    },
+                  "& .MuiInputBase-root.Mui-focused .MuiOutlinedInput-notchedOutline":
+                    {
+                      border: "2px solid #9452ffff",
+                    },
+                }}
+              />
+            </Box>
           </Box>
         </Box>
 
@@ -190,36 +209,51 @@ const AppLayout = () => {
               mb: 3,
             }}
           >
-            <Search color="#f1f1f1" size={"1.5rem"} />
-            <TextField
-              fullWidth
+            <Box
+              component="form"
+              onSubmit={searchByKeyword}
               sx={{
-                "& .MuiInputBase-root": {
-                  height: "2rem",
-                  borderRadius: "3rem",
-                  backgroundColor: "#2a2a2a",
-                  color: "#f1f1f1",
-                },
-                "& .MuiInputBase-input": {
-                  padding: "0 1rem",
-                  color: "#f1f1f1",
-                  "&::placeholder": {
-                    color: "#9a9a9a",
-                    opacity: 1,
-                  },
-                },
-                "& .MuiOutlinedInput-notchedOutline": {
-                  border: "1px solid #4a4a4a",
-                },
-                "& .MuiInputBase-root:hover .MuiOutlinedInput-notchedOutline": {
-                  border: "1px solid #9452ffff",
-                },
-                "& .MuiInputBase-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-                  {
-                    border: "2px solid #9452ffff",
-                  },
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: 1,
+                ml: 2,
               }}
-            />
+            >
+              <Search color="#f1f1f1" size={"1.5rem"} />
+              <TextField
+                fullWidth
+                value={keyword}
+                onChange={(e) => setKeyword(e.target.value)}
+                sx={{
+                  "& .MuiInputBase-root": {
+                    height: "2rem",
+                    borderRadius: "3rem",
+                    backgroundColor: "#2a2a2a",
+                    color: "#f1f1f1",
+                  },
+                  "& .MuiInputBase-input": {
+                    padding: "0 1rem",
+                    color: "#f1f1f1",
+                    "&::placeholder": {
+                      color: "#9a9a9a",
+                      opacity: 1,
+                    },
+                  },
+                  "& .MuiOutlinedInput-notchedOutline": {
+                    border: "1px solid #4a4a4a",
+                  },
+                  "& .MuiInputBase-root:hover .MuiOutlinedInput-notchedOutline":
+                    {
+                      border: "1px solid #9452ffff",
+                    },
+                  "& .MuiInputBase-root.Mui-focused .MuiOutlinedInput-notchedOutline":
+                    {
+                      border: "2px solid #9452ffff",
+                    },
+                }}
+              />
+            </Box>
           </Box>
 
           <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
