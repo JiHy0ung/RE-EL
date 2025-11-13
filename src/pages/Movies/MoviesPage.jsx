@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSearchMovieQuery } from "../../hooks/useSearchMovie";
 import { useSearchParams } from "react-router";
 import { Alert, Box, Grid, Pagination } from "@mui/material";
@@ -14,6 +14,10 @@ const MoviesPage = () => {
     keyword,
     page,
   });
+
+  useEffect(() => {
+    setPage(1);
+  }, [keyword]);
 
   if (isLoading) {
     return <div className="loader"></div>;
