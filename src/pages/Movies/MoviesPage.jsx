@@ -38,24 +38,40 @@ const MoviesPage = () => {
         <Grid item size={{ lg: 3, md: 4, xs: 12 }}>
           filter
         </Grid>
-        <Grid item size={{ lg: 9, md: 8, xs: 12 }}>
-          <Grid container spacing={1} sx={{ px: 4 }}>
-            {data?.results.map((movie, index) => (
-              <Grid
-                item
-                key={index}
-                size={{ xl: 3, lg: 4, md: 6, sm: 6, xs: 12 }}
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <MovieCard movie={movie} />
-              </Grid>
-            ))}
+        {data?.results.length === 0 ? (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              width: "100%",
+              textAlign: "center",
+              my: 4,
+              color: "gray",
+            }}
+          >
+            "{keyword}"의 결과가 없습니다.
+          </Box>
+        ) : (
+          <Grid item size={{ lg: 9, md: 8, xs: 12 }}>
+            <Grid container spacing={1} sx={{ px: 4 }}>
+              {data?.results.map((movie, index) => (
+                <Grid
+                  item
+                  key={index}
+                  size={{ xl: 3, lg: 4, md: 6, sm: 6, xs: 12 }}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <MovieCard movie={movie} />
+                </Grid>
+              ))}
+            </Grid>
           </Grid>
-        </Grid>
+        )}
       </Grid>
       <Pagination
         count={data?.total_pages}
