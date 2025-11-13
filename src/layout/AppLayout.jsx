@@ -31,7 +31,7 @@ const AppLayout = () => {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          backgroundColor: "#010101",
+          backgroundColor: "#070707ff",
           py: 2,
           px: 3,
           position: "relative",

@@ -1,9 +1,11 @@
 import { Box, Chip, Typography } from "@mui/material";
 import React from "react";
 import { useMovieGenreQuery } from "../../hooks/useMovieGenre";
+import { useNavigate } from "react-router";
 
 const MovieCard = ({ movie }) => {
   const { data: genreData } = useMovieGenreQuery();
+  const navigate = useNavigate();
 
   const showGenre = (genreIdList) => {
     if (!genreData) return [];
@@ -16,15 +18,19 @@ const MovieCard = ({ movie }) => {
     return genreNameList;
   };
 
+  const handleClick = () => {
+    navigate(`/movies/${movie.id}`);
+  };
+
   return (
     <Box
+      onClick={handleClick}
       sx={{
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
         height: "330px",
         width: "220px",
-        mx: 1,
         position: "relative",
         "&:hover .overlay": {
           opacity: 1,
@@ -38,7 +44,7 @@ const MovieCard = ({ movie }) => {
             ? `https://media.themoviedb.org/t/p/w440_and_h660_face${movie?.poster_path}`
             : "../../../no-poster-image.png"
         }
-        sx={{ height: "330px", width: "100%", objectFit: "cover", p: 2 }}
+        sx={{ height: "330px", width: "220px", objectFit: "contain" }}
       />
       <Box
         className="overlay"
@@ -46,8 +52,8 @@ const MovieCard = ({ movie }) => {
           position: "absolute",
           top: 0,
           left: 0,
-          width: "100%",
-          height: "100%",
+          height: "330px",
+          width: "220px",
           backgroundColor: "rgba(0, 0, 0, 0.5)",
           py: 3,
           px: 3,

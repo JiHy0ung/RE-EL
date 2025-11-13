@@ -29,6 +29,14 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "KnpsOdaesan";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/2510-2@1.0/KNPSOdaesan-Regular.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-display: swap;
+}
+
 * {
   margin: 0;
   padding: 0;
