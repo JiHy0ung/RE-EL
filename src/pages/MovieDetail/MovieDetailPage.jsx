@@ -121,6 +121,13 @@ const MovieDetailPage = () => {
         variant="middle"
         sx={{ backgroundColor: "rgba(255, 255, 255, 0.1)" }}
       />
+      <Box>
+        {reviews?.map((review) => (
+          <Typography color="white" fontFamily="Aggravo" fontWeight={300}>
+            {review.content}
+          </Typography>
+        ))}
+      </Box>
     </Box>
   );
 };

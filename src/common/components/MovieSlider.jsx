@@ -27,7 +27,6 @@ const MovieSlider = ({ title, movies, responsive }) => {
           },
           "& .react-multi-carousel-list:hover .movie-slider": {
             filter: "blur(3px)",
-            opacity: 0.6,
           },
           "& .react-multi-carousel-list .movie-slider:hover": {
             filter: "blur(0px)",
