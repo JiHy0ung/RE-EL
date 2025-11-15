@@ -149,6 +149,8 @@ const MoviesPage = () => {
         size="small"
         showFirstButton
         showLastButton
+        siblingCount={1}
+        boundaryCount={0}
         onChange={handlePageClick}
         page={page}
         sx={{
