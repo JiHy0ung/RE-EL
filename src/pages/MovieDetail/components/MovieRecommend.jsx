@@ -21,13 +21,18 @@ const MovieRecommend = ({ id }) => {
       <Grid
         container
         spacing={1}
-        sx={{ px: { xl: 20, lg: 15, md: 10, sm: 5 } }}
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          px: { xl: 20, lg: 15, md: 10, sm: 5 },
+        }}
       >
         {recommend?.map((movie, index) => (
           <Grid
             item
             key={index}
-            size={{ xl: 3, lg: 3, md: 4, sm: 6, xs: 12 }}
+            size={{ xl: 3, lg: 3, md: 4, sm: 6 }}
             sx={{
               display: "flex",
               justifyContent: "center",
