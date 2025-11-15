@@ -1,19 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router";
 import { useMovieDetailQuery } from "../../hooks/useMovieDetail";
-import { Box, Divider, Rating, Typography } from "@mui/material";
-import { useMovieReviewsQuery } from "../../hooks/useMovieReviews";
+import { Box, Button, Divider, Modal, Rating, Typography } from "@mui/material";
+import { useMovieTrailerQuery } from "../../hooks/useMovieTrailer";
+import { Film, X } from "lucide-react";
+import YouTube from "react-youtube";
+import { useMovieRecommendQuery } from "../../hooks/useMovieRecommend";
+import MovieReview from "./components/MovieReview";
+import MovieRecommend from "./components/MovieRecommend";
 
 const MovieDetailPage = () => {
   const { id } = useParams();
   const { data: movie } = useMovieDetailQuery(id);
-  const { data: reviews } = useMovieReviewsQuery(id);
+  const { data: trailer } = useMovieTrailerQuery(id);
+  const { data: recommend } = useMovieRecommendQuery(id);
+  const [open, setOpen] = useState(false);
 
-  console.log(reviews);
-  console.log((movie?.vote_average / 2).toFixed(1));
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const opts = {
+    width: "100%",
+    height: "100%",
+    playerVars: {
+      autoplay: 1,
+    },
+  };
 
   return (
-    <Box>
+    <Box sx={{ py: 2, px: { xs: 4, sm: 6, md: 8 } }}>
       <Box
         sx={{
           display: "flex",
@@ -21,25 +36,69 @@ const MovieDetailPage = () => {
           justifyContent: "center",
           alignItems: "center",
           gap: 4,
-          py: 2,
-          px: 8,
         }}
       >
         <Box
-          component="img"
-          src={
-            movie?.poster_path
-              ? `https://media.themoviedb.org/t/p/w300_and_h450_face${movie?.poster_path}`
-              : "../../../no-poster-image.png"
-          }
-        />
+          sx={{
+            position: "relative",
+            "&:hover .trailer-button": {
+              opacity: 1,
+            },
+            "&:hover img": {
+              filter: "brightness(0.5)",
+            },
+          }}
+        >
+          <Box
+            component="img"
+            src={
+              movie?.poster_path
+                ? `https://media.themoviedb.org/t/p/w300_and_h450_face${movie?.poster_path}`
+                : "../../../no-poster-image.png"
+            }
+            sx={{
+              display: "block",
+              transition: "filter 0.3s ease",
+            }}
+          />
+          <Button
+            disableFocusRipple
+            disableTouchRipple
+            className="trailer-button"
+            onClick={handleOpen}
+            sx={{
+              position: "absolute",
+              bottom: "50%",
+              left: "50%",
+              transform: "translate(-50%, 50%)",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: 0.5,
+              color: "black",
+              backgroundColor: "white",
+              fontFamily: "Aggravo",
+              fontWeight: "300",
+              pr: 1.5,
+              opacity: 0,
+              transition: "opacity 0.3s ease",
+              pointerEvents: "auto",
+              "&:hover": {
+                backgroundColor: "#f0f0f0",
+              },
+            }}
+          >
+            <Film size={23} style={{ paddingBottom: "3px" }} />
+            예고편 보러가기
+          </Button>
+        </Box>
+
         <Box
           sx={{
             display: "flex",
             flexDirection: "column",
             justifyContent: "start",
             alignItems: "flex-start",
-            height: "540px",
             py: 4,
           }}
         >
@@ -100,7 +159,12 @@ const MovieDetailPage = () => {
               •
             </Typography>
             {movie?.genres.map((genre) => (
-              <Typography color="white" fontFamily="Aggravo" fontWeight={300}>
+              <Typography
+                key={genre.id}
+                color="white"
+                fontFamily="Aggravo"
+                fontWeight={300}
+              >
                 <span style={{ boxShadow: "inset 0 -10px 0 #763bd6d3" }}>
                   #{genre?.name}
                 </span>
@@ -113,21 +177,88 @@ const MovieDetailPage = () => {
           <Typography color="white" fontFamily="Aggravo" fontWeight={300}>
             {movie?.overview}
           </Typography>
-          예산 (숫자 단위가 크기때문에 ,를 붙여주는 형식으로 바꿔서 숫자를
-          보여주자)
         </Box>
       </Box>
       <Divider
         variant="middle"
-        sx={{ backgroundColor: "rgba(255, 255, 255, 0.1)" }}
+        sx={{ backgroundColor: "rgba(255, 255, 255, 0.2)", my: 4 }}
       />
-      <Box>
-        {reviews?.map((review) => (
-          <Typography color="white" fontFamily="Aggravo" fontWeight={300}>
-            {review.content}
-          </Typography>
-        ))}
-      </Box>
+
+      <MovieReview id={id} />
+
+      <MovieRecommend id={id} />
+
+      <Modal
+        open={open}
+        onClose={handleClose}
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Box
+          sx={{
+            position: "relative",
+            width: { xs: "90%", sm: "80%", md: "70%", lg: "60%" },
+            aspectRatio: "16/9",
+            backgroundColor: "black",
+            outline: "none",
+            borderRadius: 2,
+            overflow: "hidden",
+          }}
+        >
+          <Button
+            onClick={handleClose}
+            sx={{
+              position: "absolute",
+              top: 10,
+              right: 10,
+              color: "white",
+              backgroundColor: "rgba(0, 0, 0, 0.5)",
+              minWidth: "auto",
+              padding: 1,
+              zIndex: 1,
+              "&:hover": {
+                backgroundColor: "rgba(0, 0, 0, 0.7)",
+              },
+            }}
+          >
+            <X size={24} />
+          </Button>
+          {trailer ? (
+            <Box
+              sx={{
+                width: "100%",
+                height: "100%",
+                "& iframe": {
+                  width: "100%",
+                  height: "100%",
+                },
+              }}
+            >
+              <YouTube
+                videoId={trailer.key}
+                opts={opts}
+                style={{ width: "100%", height: "100%" }}
+              />
+            </Box>
+          ) : (
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                height: "100%",
+                color: "white",
+                fontFamily: "Aggravo",
+              }}
+            >
+              <Typography>예고편을 제공하지 않는 영화입니다.</Typography>
+            </Box>
+          )}
+        </Box>
+      </Modal>
     </Box>
   );
 };

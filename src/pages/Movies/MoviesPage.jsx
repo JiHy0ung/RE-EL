@@ -62,6 +62,7 @@ const MoviesPage = () => {
         }}
       >
         <Breadcrumbs
+          maxItems={genres.length}
           sx={{
             display: "flex",
             justifyContent: "center",
@@ -76,7 +77,14 @@ const MoviesPage = () => {
           }}
         >
           {genres.map((genre) => (
-            <Button disableRipple sx={{ color: "#ffffff" }}>
+            <Button
+              disableRipple
+              sx={{ color: "#ffffff" }}
+              onClick={() => {
+                setSelectedGenre(genre.id);
+                setPage(1);
+              }}
+            >
               {genre.name}
             </Button>
           ))}
